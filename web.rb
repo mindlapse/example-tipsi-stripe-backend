@@ -181,18 +181,20 @@ post '/create_intent' do
     else
       payment_intent = create_payment_intent(
         params[:amount],
-        nil,
-        nil,
-        nil,
+        params[:sourceId],
+        params[:paymentMethodId],
+        params[:customerId],
         params[:metadata],
         params[:currency],
         nil,
-        nil
+        params[:returnURL]
       )
     end
   rescue Stripe::StripeError => e
     status 402
-    return log_info("Error creating PaymentIntent: #{e.message}")
+    return {
+      :error => e.message
+    }
   end
 
   log_info("PaymentIntent successfully created: #{payment_intent.id}")
