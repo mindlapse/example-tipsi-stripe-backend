@@ -177,6 +177,11 @@ end
 post '/create_intent' do
   begin
     log_info("/create_intent called")
+    
+    if request.content_type.include? 'application/json' and params.empty?
+      params = Sinatra::IndifferentHash[JSON.parse(request.body.read)]
+    end
+    
     payment_intent_id = ENV['DEFAULT_PAYMENT_INTENT_ID']
     if payment_intent_id
       payment_intent = Stripe::PaymentIntent.retrieve(payment_intent_id)
