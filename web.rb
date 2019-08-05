@@ -180,6 +180,7 @@ post '/create_intent' do
     if payment_intent_id
       payment_intent = Stripe::PaymentIntent.retrieve(payment_intent_id)
     else
+      log_info("Creating payment intent")
       log_info("Creating payment intent with #{params.amount} and ${params.currency}")
       payment_intent = create_payment_intent(
         params[:amount],
