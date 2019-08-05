@@ -193,7 +193,8 @@ post '/create_intent' do
   rescue Stripe::StripeError => e
     status 402
     return {
-      :error => e.message
+      :error => e.message,
+      :exception => e
     }
   end
 
