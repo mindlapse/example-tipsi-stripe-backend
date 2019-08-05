@@ -199,7 +199,7 @@ post '/create_intent' do
         nil,
         params[:returnURL]
       )
-      log_info("Created #{paymentIntent}")
+      log_info("Created #{payment_intent}")
     end
   rescue Stripe::StripeError => e
     status 402
