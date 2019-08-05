@@ -4,6 +4,7 @@ require 'dotenv'
 require 'json'
 require 'encrypted_cookie'
 
+STDOUT.sync = true
 Dotenv.load
 Stripe.api_key = ENV['STRIPE_TEST_SECRET_KEY']
 
