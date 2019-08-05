@@ -175,10 +175,12 @@ end
 # to prevent misuse
 post '/create_intent' do
   begin
+    log_info("/create_intent called")
     payment_intent_id = ENV['DEFAULT_PAYMENT_INTENT_ID']
     if payment_intent_id
       payment_intent = Stripe::PaymentIntent.retrieve(payment_intent_id)
     else
+      log_info("Creating payment intent with #{params.amount} and ${params.currency}")
       payment_intent = create_payment_intent(
         params[:amount],
         params[:sourceId],
