@@ -199,7 +199,7 @@ post '/create_intent' do
     return {
       :error => e.message,
       :exception => e
-    }
+    }.to_json
   end
 
   log_info("PaymentIntent successfully created: #{payment_intent.id}")
