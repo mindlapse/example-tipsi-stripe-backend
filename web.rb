@@ -82,7 +82,7 @@ post '/confirm_payment' do
     end
     begin
         payment_intent = Stripe::PaymentIntent.confirm(payload[:payment_intent_id], {
-          :use_stripe_sdk => true,
+#           :use_stripe_sdk => true,
           :payment_method => payload[:payment_method]
         })
         rescue Stripe::StripeError => e
