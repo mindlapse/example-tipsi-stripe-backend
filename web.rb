@@ -197,7 +197,8 @@ post '/create_intent' do
         params[:metadata],
         params[:currency],
         nil,
-        params[:returnURL]
+        params[:returnURL],
+        params[:confirmationMethod] == 'manual'
       )
       log_info("Created #{payment_intent}")
     end
