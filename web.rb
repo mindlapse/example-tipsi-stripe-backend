@@ -92,7 +92,8 @@ post '/confirm_payment' do
 
     status 200
     return {
-        :secret => payment_intent.client_secret
+        :secret => payment_intent.client_secret,
+        :status => payment_intent.status
     }.to_json
 end
 
