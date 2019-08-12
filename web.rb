@@ -198,7 +198,8 @@ post '/create_intent' do
         params[:currency],
         nil,
         params[:returnURL],
-        params[:confirmationMethod] != 'manual'
+        params[:confirmationMethod],
+        params[:confirm]
       )
       log_info("Created #{payment_intent}")
     end
@@ -260,7 +261,7 @@ post '/stripe-webhook' do
 end
 
 def create_payment_intent(amount, source_id, payment_method_id, customer_id = nil,
-                          metadata = {}, currency = 'usd', shipping = nil, return_url = nil, confirm = false)
+                          metadata = {}, currency = 'usd', shipping = nil, return_url = nil, confirmationMethod = "automatic", confirm = false)
   return Stripe::PaymentIntent.create(
     :amount => amount,
     :currency => currency || 'usd',
@@ -272,7 +273,7 @@ def create_payment_intent(amount, source_id, payment_method_id, customer_id = ni
     :shipping => shipping,
     :return_url => return_url,
     :confirm => confirm,
-    :confirmation_method => confirm ? "manual" : "automatic",
+    :confirmation_method => confirmationMethod ? confirmationMethod : "automatic",
     :use_stripe_sdk => confirm ? true : nil,
     :capture_method => ENV['CAPTURE_METHOD'] == "manual" ? "manual" : "automatic",
     :metadata => {
