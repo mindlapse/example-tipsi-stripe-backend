@@ -81,7 +81,10 @@ post '/confirm_payment' do
         payload = Sinatra::IndifferentHash[JSON.parse(request.body.read)]
     end
     begin
-        payment_intent = Stripe::PaymentIntent.confirm(payload[:payment_intent_id], {:use_stripe_sdk => true})
+        payment_intent = Stripe::PaymentIntent.confirm(payload[:payment_intent_id], {
+          :use_stripe_sdk => true,
+          :payment_method => payload[:payment_method]
+        })
         rescue Stripe::StripeError => e
         status 402
         return log_info("Error: #{e.message}")
