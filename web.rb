@@ -85,9 +85,9 @@ post '/confirm_payment' do
 #           :use_stripe_sdk => true,
           :payment_method => payload[:payment_method]
         })
-        rescue Stripe::StripeError => e
+    rescue Stripe::StripeError => e
         status 402
-        return log_info("Error: #{e.message}")
+        return log_info("Error: #{e}")
     end
 
     status 200
