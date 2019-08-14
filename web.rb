@@ -76,11 +76,13 @@ end
 
 post '/confirm_payment' do
     authenticate!
+    log_info("/confirm_payment called")
     payload = params
     if request.content_type.include? 'application/json' and params.empty?
         payload = Sinatra::IndifferentHash[JSON.parse(request.body.read)]
     end
     begin
+        log_info("Calling confirm with payload #{payload}")
         payment_intent = Stripe::PaymentIntent.confirm(payload[:payment_intent_id], {
 #           :use_stripe_sdk => true,
           :payment_method => payload[:payment_method]
@@ -93,7 +95,6 @@ post '/confirm_payment' do
             :status => e.http_status,
             :request_id => e.request_id,
             :message => e.message,
-            :json => e.json_body
         }.to_json
     end
 
