@@ -90,7 +90,8 @@ post '/confirm_payment' do
         return {
             :status => e.http_status,
             :request_id => e.request_id,
-            :message => e.message
+            :message => e.message,
+            :json => e.json_body
         }.to_json
     end
 
