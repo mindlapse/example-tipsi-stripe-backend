@@ -86,6 +86,8 @@ post '/confirm_payment' do
           :payment_method => payload[:payment_method]
         })
     rescue Stripe::StripeError => e
+        log_info("Error")
+        log_info("Error: #{e.json_body}")
         status e.http_status
         return {
             :status => e.http_status,
