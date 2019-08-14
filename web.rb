@@ -87,6 +87,7 @@ post '/confirm_payment' do
         })
     rescue Stripe::StripeError => e
         status 402
+        log_info("#{e.methods}")
         return log_info("Error: #{e}")
     end
 
