@@ -279,27 +279,25 @@ end
 
 def create_payment_intent(amount, source_id, payment_method_id, customer_id = nil,
                           metadata = {}, currency = 'usd', shipping = nil, return_url = nil, confirmationMethod = "automatic", confirm = false)
-  return Stripe::PaymentIntent.create(
-    :amount => amount,
-    :currency => currency || 'usd',
-    :customer => customer_id,
-    :source => source_id,
-    :payment_method => payment_method_id,
-    :payment_method_types => ['card'],
-    :description => "Example PaymentIntent",
-    :shipping => shipping,
-    :return_url => return_url,
-    :confirm => confirm,
-    :confirmation_method => confirmationMethod ? confirmationMethod : "automatic",
-    :use_stripe_sdk => confirm ? true : nil,
-    :capture_method => ENV['CAPTURE_METHOD'] == "manual" ? "manual" : "automatic",
-    :transfer_data => {
-      :destination => 'acct_1FCSxmFVC0pNcACG',
-    },
-    :metadata => {
-      :order_id => '5278735C-1F40-407D-933A-286E463E72D8',
+  return Stripe::PaymentIntent.create({
+    amount: amount,
+    currency: currency || 'usd',
+    customer: customer_id,
+    source: source_id,
+    payment_method: payment_method_id,
+    payment_method_types: ['card'],
+    description: "Example PaymentIntent",
+    shipping: shipping,
+    return_url: return_url,
+    confirm: confirm,
+    confirmation_method: confirmationMethod ? confirmationMethod : "automatic",
+    use_stripe_sdk: confirm ? true : nil,
+    capture_method: ENV['CAPTURE_METHOD'] == "manual" ? "manual" : "automatic",
+    metadata: {
+      order_id: '5278735C-1F40-407D-933A-286E463E72D8',
     }.merge(metadata || {}),
-  )
+  },
+  stripe_account: 'acct_1FCSxmFVC0pNcACG')
 end
 
 def create_and_capture_payment_intent(amount, source_id, payment_method_id, customer_id = nil,
