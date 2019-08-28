@@ -296,8 +296,7 @@ def create_payment_intent(amount, source_id, payment_method_id, customer_id = ni
     metadata: {
       order_id: '5278735C-1F40-407D-933A-286E463E72D8',
     }.merge(metadata || {}),
-  },
-  stripe_account: 'acct_1FCSxmFVC0pNcACG')
+  })
 end
 
 def create_and_capture_payment_intent(amount, source_id, payment_method_id, customer_id = nil,
